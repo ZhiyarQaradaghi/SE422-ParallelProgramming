@@ -1,0 +1,16 @@
+Lecture 1
+
+
+ - Introduction 
+
+
+Computer Architecture
+CPU Architecture 
+AMD Zen 5 CPU - 9950x
+Intel Luner CPU 
+
+Key components inside computer:
+
+- CPU
+- Memory 
+- GPU

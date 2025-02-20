@@ -1,0 +1,18 @@
+Concurrently: Both tasks are making progress at once - tasks may not be run at once together but will eventually finish
+
+Parallel: Tasks are being executed by cores at the same time - parallelism is just a subset of concurrency as it requires both tasks to be making progress at once but it just adds the requirement of 'same time'
+
+Human body performs parallelism all the time - repiration and digestion can occur in parallel - all the senses as well
+
+Java programs can have multiple threads of execution - each thread has its own method-call stack and program counter - allowing the method to execute concurrently with other threads while sharing with them application-wide resources such as memory and file handles - this is called multithreading
+
+An example of an application of concurrent programming: When streaming an audio or video over the internet, the user does not want to wait until the entire payload is downloaded, so we can have multiple threads:
+
+1. (Producer) One used to download the media itself
+2. (Consumer) One used to play the downloaded parts of the media while the media is being downloaded (concurrently) 
+
+
+To avoid a choppy playback (ie the video plays undownloaded parts) - the threads are synchronized (their actions are coordinated) so that the player thread doesn't begin until there is a sufficient amount of the media in memory to keep the player thread busy.
+
+Producer and Consumer threads share memory - the JVM creates threads to run programs and threads to perform house keeping tasks such as garbage collection.
+

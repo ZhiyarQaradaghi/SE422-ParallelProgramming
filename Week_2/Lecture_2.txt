@@ -1,0 +1,6 @@
+Processes, Parallelism, and Concurrency
+
+// reference - abraham chap 3 and 5.1 
+
+- CPU complex 
+- Perform more than one task
