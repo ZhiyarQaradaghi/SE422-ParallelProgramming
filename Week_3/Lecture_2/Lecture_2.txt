@@ -1,0 +1,70 @@
+Reference: Tim chapter 1 
+
+Agenda:
+
+1. New solution that will solve some of the limitations of lecture 1 ----- called MULTI THREADING  
+2. Side affects of this new solution
+3. Java code of how to implement it 
+
+
+Recap:
+
+Multi process programming - OS will do it for you, everytime you launch a new application a process will automatically be created for you 
+- everything are processes from the OS perspective
+
+Each process has an independant memory space - so if the processes need to exchane data then they need to share that data -- LIMITATION 
+
+Most common solution - treating the multi process programming as a special case of distributed system - everythign related to distributed system you can apply it to this paradigm 
+- the only special case about it is that physically it is one machine but all the network stack and other distributed concepts are the same 
+
+The whole point of multi process programming is to achieve parallelism and concurrency 
+
+You can achieve parallelism and concurrency without multi process programming using - MULTI THREADING 
+
+Multi thread programming - is a different way to achieve concurrency and parallelism in computation - similar as multi process but 
+it will NEVER be treated as a distributed system because it violates a key concept which is the multi thread programming the memory is shared (the multi process memory is not shared)
+
+SE422 is all about threads - multi threading is much faster and light weight than multi process in certain scenarios 
+
+In academia you can always use multi threading but from industry perspective there are cases where multi process programming is more suitable - in academia everything works but at the cost of unnecessary resources 
+
+
+Which case to use each? If you have a set of tasks from different apps 
+
+t1          t2          t3
+App1        App2        App3
+
+Here multi process programming is much better in this scenario 
+
+If you have multiple applications and you want to have parallelism and concurrency - each application will be one process 
+
+
+For multi threading:
+
+t1  t2  t3
+----------- > App 
+
+All the tasks belong to one application - its faster and the memory is shared 
+
+
+It is possible to mix both like App1 could have 3 tasks of its own but still be with App 2 and App3 using mutlti process programming 
+
+
+We will ignore multi process programming 
+
+----
+
+Thread: 
+A thread is an execution path - execution path: if you have a set of instructions and you want to execute the one by one and the way (work flow) to go through them is the execution path 
+
+Creating and destroying processes are slower than creating and destroying threads -- all of the threads will share the same memory space of the process and are independant from each other 
+
+
+
+Threads are created at RUNTIME not COMPILE time 
+
+
+In order to have mutli threading in Java
+1. Create an object of type Thread (extend thread)
+2. From that object, you need to call .start() so that we can talk to the OS and create the thread and that thread can call run 
+3. The signature of the run method should not be touched - you need to override the run method to have custom code - always public void run()  
