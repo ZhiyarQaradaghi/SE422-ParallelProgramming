@@ -1,0 +1,19 @@
+
+Agenda: (Software Design context - Making the code more elegant - SE421)
+
+    1. Recap for multi threading and how did I create and launch a thread from last lecture
+    2. Different ways to create and launch threads, different programming styles 
+    3. using anonymous classes to create threads
+    4. Runnable Interface - Using objects of runnable interfaces to create threads
+    5. Anonymous classes and runnables mix to create threads
+    6. Lambda operation (how is this useful to create threads?)
+
+
+Practical - How can we create threads? - Different ways to create threads 
+
+
+-- recap 
+
+Multi threading and multi process programming are different - processes have different memory addresses while in threads the memory can be shared 
+
+Threads will not be created automatically unlike multi processes, you have to write code to create threads
