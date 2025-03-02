@@ -1,0 +1,53 @@
+# Reference : [Tim] Chapter 6
+
+Agenda:
+    1. Context Switching in multi thread programming 
+    2. Solution for Context Switching overhead - called THREAD POOLS 
+
+
+Paralleism 
+
+1 Thread 4 Cores  -> Slower 
+4 Threads 4 Cores -> fastest
+
+WHen I started, i talked about processes - but in reality every process should have atleast 1 thread and the scheduling will be ON THREADS not on processes 
+
+
+Special case:
+
+5+ Threads 4 Cores -- The more threads you have more than the cores, the more concurrency because the 5th
+
+Context switching is switching the context fo excution from the hardware layer - more context switching more concurrency
+
+1. Threads are not aware of context switching (only OS) - they do not know they are being shoved around because from their end they are just executing instructions after another 
+
+2. Context switching is a computationally expensive computation, not free of charge - imagine thread one in core 1, i need to take a snap shot in core 1 because if thread one goes to another core and comes back i need to load that snap shot back for the thread 1 to execute without errors --- context switching overhead 
+
+
+- at any time window how many times do i have to perform context switching
+
+If I have more threads than cores, then it will be slower 
+
+Modern CPUs have SMT - Multi threading -- the core has the capabilities to host 2 threads and it can switch between them fast - he cannot execute both at the same time its like 1 core and 30-40% more 
+
+
+Imagine setting a limit - forcing people to only create 4 and not more than 4 threads 
+
+Use a factory design pattern where you have a condition (if n > 4) {} not to let more than 4 Threads being created 
+
+Thread pools 
+
+                        FIFO (queue - accepts 3 tasks at one time)
+100s                    pool (waiting for tasks to complete)            OS Threads  (here we have context switching, moving tasks around)
+Tasks    ----------->   [ 3 ]                                           only accept 3
+
+
+What is the correct number of threads? Depends on the setup - yad has 22 cores so 22 threads but someone could have 8 so 8 for him - need to figure out how to determine it dynamically
+
+
+In java there is a runtime class that has a method that will give you the available processors - number of cores in the system - this will solve the problem
+
+
+Number of Java threads and OS threads may not be the same, not one to one 
+
+It is many to many, you can sumbmit like 10000 runnable objects to one OS thread or 5 depending on pool 
