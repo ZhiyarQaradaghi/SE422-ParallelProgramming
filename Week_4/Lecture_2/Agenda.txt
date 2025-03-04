@@ -1,0 +1,9 @@
+
+Main topics
+
+How we can exchange data/ data transfer between threads- if i have a piece of data whether it is primitive or non pirmtiive hwo can i transfer that piece of data from that one thread to another 
+
+1. Creating 2 threads 
+2. If I have a piece of data in Thread 1, how can i transfer it to Thread 2 - Using Static variables - Using non static variables 
+- Are you transfering that data by value or reference (what is the implication of that in multi thread programming?) 
+- Some approaches may work in Standalone classes and may not work in anonymous classes and vice versa 
