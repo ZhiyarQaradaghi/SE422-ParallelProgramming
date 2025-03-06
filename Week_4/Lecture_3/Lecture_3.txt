@@ -1,0 +1,106 @@
+Thread Safety Chapter 
+
+- Threads and join method
+- Java code example
+- Data race
+- Thread Safety
+- Intrinsic Locks 
+
+
+I do not know when the main thread is going to execute the print end statement
+
+
+Data racing --- scenario
+
+main           t1                                   t2
+|               |                                   |
+|               |                                   |
+count=0         read count                          read count +1
+|                +1
+|                |                                  |
+|                |
+|                write count                        |
+|                push it back 
+count <--------------to main memory                 | does the same 
+memory                                                 as t1 
+space  <------------------------------------------- +1 
+                                                    |                                             
+
+count = 1                                           |
+
+the problem here is the +1 from 
+one of the threads is lost
+
+
+ --- Intrinsic Lock (lock an object and unlock it once the method is done) SYNCHRONIZED 
+When you have a thread t1 that wants to access increment() -- t1 needs to lock the current object first then it will do ++ operation then t1 needs to unlock 
+
+-- side affect : if you have another thread and he does this as well, he needs to wait until thread t1 finishes and unlocks then he can lock it for himself 
+-- ONLY ONE thread can have access to the method at once 
+
+*** The intrinsic lock does this: if t1 and t2 run in parallel --
+
+t1 -> t2, t2 -> t1, t1 || t2 
+
+Instrinsic lock will eliminate t1 || t2 
+
+WIll LOCK when enter that method, and unlock when exiting that method 
+
+-- technically the synchornized method will not have concurrency or parallelism - PERFORMANCE HIT !! 
+
+
+
+Imagine in main memory we have 2 objects, x and y 
+
+in t1, we lock x, increment x, unlock x 
+in t2, we lock y, increment y, unlock y 
+
+we have parallelism in this case because they are different memory addresses
+---
+but 
+in t1, we lock x, increment x, unlock x 
+in t2, we lock x, increment x, unlock x
+
+no parallelism due to same memory address 
+--
+is this thread safe?
+
+t1 reads x, writes x 
+t2 writes x, reads x 
+
+not thread safe 
+--
+how about this
+
+t1 reads x
+t2 reads x
+
+safe, no need for lock - if all they do is reading 
+
+-- 
+t1 reads x
+t2 writes x 
+
+thread safe, no data corruption 
+
+--
+most challenging 
+
+t1 writes x
+t2 writes x
+
+threads safe as long as I dont have a read 
+--
+
+t1 writes x
+t2  reads x
+t3  reads x
+
+thread safe - but i do not know which value t2 or t3 will get, will it be the new variant or both will get the old or new .... 
+
+
+Main point 
+
+you will have a data race condition when you have 2 threads with read and write operations 
+
+in code example, the count ++ is a read write operations in t1 and t2 
