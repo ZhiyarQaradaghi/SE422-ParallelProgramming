@@ -14,13 +14,11 @@ public class ThreadPoolExample {
         // only 3 threads, no less no more threads - maximum number of threads that this pool is going to use 
         // 3 threads are created and are waiting in idle 
 
-        for(int iq=0; iq < 100000; iq++) {
             Runnable task = () -> {
             for(int i=0; i < 100000; i++) {
                 System.out.println("AUIS");
             }
         };
         pool.execute(task);
-    }
     }    
 }

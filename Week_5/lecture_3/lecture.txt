@@ -1,0 +1,25 @@
+Agenda : How would you design software systems in the context of SE422?
+
+- Design aspect 
+- no new tool 
+- what is practical and not practical 
+- if large project what do  you have to consider and not consider 
+
+Why do you want se422? multi threading? For performance - need it when you try to make things fast - it will introduce a ton of complexity in the application layer (locks, threadpools, thread starvation ... etc)
+
+The design aspect comes into play by managing the complexity - keeping the complexity in check 
+
+
+
+Hypothetical System : 
+
+Req1 - A student has an ID and a gpa    --- functional
+Req2 - A data structure is required to hold a set of students (their ids and gpa) --- functional
+Req3 - The implementation of req1 and req2 must be threadsafe ---- non functional -- this will never show up in real life because nobody knows what a thread safety is 
+
+req3 will show up in like this in real life - system needs to be fast and have high performance
+
+
+
+
+Always create a different class for a threadpool - following the factory design pattern -- any class that wants the pool will talk to this pool utility class (util package)
