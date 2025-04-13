@@ -1,4 +1,4 @@
-package Week_4;
+package Week_4.Lecture_1;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -14,11 +14,49 @@ public class ThreadPoolExample {
         // only 3 threads, no less no more threads - maximum number of threads that this pool is going to use 
         // 3 threads are created and are waiting in idle 
 
-            Runnable task = () -> {
-            for(int i=0; i < 100000; i++) {
-                System.out.println("AUIS");
+        Runnable task = () -> {
+            for(int i=0; i < 10000; i++) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                synchronized (System.out) { // synchronized is used to make sure that only one thread is using the System.out at a time
+                    System.out.println("AUIS");
+                }
             }
         };
+
+        Runnable task2 = () -> {
+            for(int i=0; i < 10000; i++) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                synchronized (System.out) { // synchronized is used to make sure that only one thread is using the System.out at a time
+                    System.out.println("AUK");
+                }
+            }
+        };
+
         pool.execute(task);
+        pool.execute(task2);
+
+        Runnable task3 = () -> {
+            for (int i = 0; i < 10000; i++) {
+                System.out.println("Thread 3: " + i);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Thread thread3 = new Thread(task3);
+        thread3.start();
+
+        
     }    
 }

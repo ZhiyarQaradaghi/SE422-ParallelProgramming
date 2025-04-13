@@ -1,6 +1,8 @@
 package Week_4.Lecture_3;
 
 // Main reason this course is 400 level is because i do not know which thread happens before which thread
+
+// INSTRINSIC LOCKS
 public class Main {
     public static void main(String[] args) {
         System.out.println("Start of Main");
