@@ -1,4 +1,4 @@
-package Week_12;
+package Week_12.Lecture_1;
 
 /*
   Java Textbook Chapter 5 - Immutables
@@ -28,7 +28,7 @@ package Week_12;
 public class ImmutableObjects {
 
     public static void main(String[] args) {
-        Student s = new Student(1, 3.5, new Department(1, "Computer Science"));
+        Student s = new Student(1, 3.5);
 
         s = s.setGpa(3.2).setId(5);
 
@@ -53,12 +53,10 @@ public class ImmutableObjects {
 class Student {
     private final int id;
     private final double gpa;
-    private final Department dept;
 
-    public Student(int id, double gpa, Department dept) {
+    public Student(int id, double gpa) {
         this.id = id;
         this.gpa = gpa;
-        this.dept = dept;
     }
 
 
@@ -71,35 +69,13 @@ class Student {
         return gpa;
     }
 
-    public Department getDept() {
-        return dept;
-    }
-
     public Student setGpa(double gpa) {
-        return new Student(this.id, gpa, this.dept); // create a new object with the new gpa
+        return new Student(this.id, gpa); // create a new object with the new gpa
         // this.gpa = gpa; // cannot change the gpa since it is immutable
     }
 
     public Student setId(int id) {
-        return new Student(id, this.gpa, this.dept); // create a new object with the new id
+        return new Student(id, this.gpa); // create a new object with the new id
         // this.id = id; // cannot change the id since it is immutable
-    }
-
-    public Student setDept(Department dept) {
-        return new Student(this.id, this.gpa, dept); // create a new object with the new dept
-        // this.dept = dept; // cannot change the dept since it is immutable
-    }
-
-    
-
-}
-
-
-class Department {
-    int deptId;
-    String deptName;
-    public Department(int deptId, String deptName) {
-        this.deptId = deptId;
-        this.deptName = deptName;
     }
 }
