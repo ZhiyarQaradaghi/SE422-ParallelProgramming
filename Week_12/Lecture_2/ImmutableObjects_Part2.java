@@ -151,7 +151,7 @@ class Thread2 extends Thread {
 
 class DB {
     // We dont need this anymore because we need CAS-- public static volatile Student ptr; // volatile to force every thread to read the value from the main memory and not from the cache when the address of ptr is changed 
-    public static AtomicReference<Student> ptr = new AtomicReference<>(); 
+    public static AtomicReference<Student> ptr = new AtomicReference<>();   
     /*
      ptr points to an object of AtomicReference class, inside the AtomicReference class there is a pointer to the student Object
 
