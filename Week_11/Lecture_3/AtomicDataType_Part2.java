@@ -71,9 +71,10 @@ package Week_11.Lecture_3;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.LongAdder;
 
 public class AtomicDataType_Part2 {
-
+    LongAdder count = new LongAdder();
     int x;
     int before = x;
     int after = x.increment();
@@ -107,7 +108,7 @@ public class AtomicDataType_Part2 {
     // 1. Use a data structure - t1 and t2 are adding a and b to x = i want x + a + b. I will put a in a cell, only shared by t1, and another cell for b, only shared by t2. If t2 wants to add c as well, it will add it to the cell of t2 which is b+c. 
     // If I want to see x + a + b + c, I will just scan the data structure and add the values of the cells. Array of cells - this is a data structure that will help me to remove the contention.
     // I removed the contention, I made write faster, it becomes O(1) and the read is O(n) - this is a trade off. 
-    // LongAdder is a datastructure that holds updates for you - the add() will create a cell for you and the get() will scan the cells and add them up. The sum() will scan it and return the sum of all the cells.
+    // IMPORTANT -- LongAdder is a datastructure that holds updates for you - the add() will create a cell for you and the get() will scan the cells and add them up. The sum() will scan it and return the sum of all the cells.
  
  /*
   Advantages of LongAdder:
@@ -147,35 +148,6 @@ public class AtomicDataType_Part2 {
         } while (!compareAndSet(prev, next)); // retry until successful
         return next;
     }
-
-    public final int multiply(int x) {
-        int prev, next;
-        do {
-            prev = get(); // read current value
-            next = prev * x; // compute new value
-        } while (!compareAndSet(prev, next)); // retry until successful
-        return next;
-    }
-
-    public final int divide(int x) {
-        int prev, next;
-        do {
-            prev = get(); // read current value
-            next = prev / x; // compute new value
-        } while (!compareAndSet(prev, next)); // retry until successful
-        return next;
-    }
-
-    public final int subtract(int x) {
-        int prev, next;
-        do {
-            prev = get(); // read current value
-            next = prev - x; // compute new value
-        } while (!compareAndSet(prev, next)); // retry until successful
-        return next;
-    }
-
-
     
     public final int incrementAndGet() {
         int prev, next;
@@ -186,4 +158,37 @@ public class AtomicDataType_Part2 {
         return next;
     }
     
+}
+
+// longadder example code
+
+class Main {
+    public static void main(String[] args) throws InterruptedException {
+        LongAdder counter = new LongAdder();
+
+        int numberOfThreads = 10;
+        int incrementsPerThread = 1000;
+
+        // Create a ThreadPoolExecutor manually
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(
+            numberOfThreads,               // core pool size
+            numberOfThreads,               // max pool size
+            0L, TimeUnit.MILLISECONDS,     // keep-alive time
+            new LinkedBlockingQueue<>()    // unbounded queue
+        );
+
+        // Submit incrementing tasks
+        for (int i = 0; i < numberOfThreads; i++) {
+            executor.submit(() -> {
+                for (int j = 0; j < incrementsPerThread; j++) {
+                    counter.increment(); // Efficient thread-safe increment
+                }
+            });
+        }
+
+        executor.shutdown();
+        executor.awaitTermination(5, TimeUnit.SECONDS);
+
+        System.out.println("Final count: " + counter.sum()); // Expected: 10000
+    }
 }
