@@ -1,0 +1,8 @@
+Assignment 2
+
+Step 2: About 4 threads
+
+Step 3: About the thread pools
+
+
+Bonus: another folder using all 3 
