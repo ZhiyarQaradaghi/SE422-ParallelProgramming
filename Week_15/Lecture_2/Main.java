@@ -63,6 +63,7 @@ public class Main {
           ALL THE write operations should be removed with set and get methods 
 
 
+          this is an implementation of a lock
             public void lock(int t) {
             int other = 1-t;
             flag[t]=1;
